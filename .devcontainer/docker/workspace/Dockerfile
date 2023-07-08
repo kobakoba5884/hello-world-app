@@ -72,3 +72,12 @@ RUN apt-get -y install locales \
     && echo "${LOCALE} UTF-8" >> /etc/locale.gen \
     && echo "LANG=${LOCALE}" > /etc/locale.conf \
     && locale-gen ${LOCALE}
+
+# ---------------------------------- addtional packages ----------------------------------
+
+ARG ADDITONAL_PKG="iputils-ping lsof tree"
+
+RUN apt-get update -y \
+    && apt-get install ${ADDITONAL_PKG} -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*

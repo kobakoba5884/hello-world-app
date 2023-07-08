@@ -1,37 +1,44 @@
-const express = require('express');
-const { MongoClient } = require('mongodb');
-const cors = require('cors');
+const express = require("express");
+const { MongoClient } = require("mongodb");
+const cors = require("cors");
 
-const app = express();
-const port = 8080;
+const main = async () => {
+  const PORT = process.env.PORT | 8080;
+  const app = express();
 
-let db;
+  let db;
 
-MongoClient.connect(
-  'mongodb://dbuser:thisIsReallyStrongPassword123@mongodb:27017/dev',
-  { useUnifiedTopology: true },
-  (err, client) => {
-    if (err) {
-      console.error(err);
-      process.exit(1);
+  const uri =
+    "mongodb://dbuser:thisIsReallyStrongPassword123@mongodb:27017/?authSource=admin&readPreference=primary&ssl=false&directConnection=true";
+
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+    db = client.db("dev");
+
+    console.log("Connected successfully to server");
+  } catch (e) {
+    console.error(e);
+  }
+
+  app.use(cors());
+
+  app.get("/", async (_, res) => {
+    if (!db) {
+      return res.send("Waiting for DB connection...");
     }
 
-    console.log('Connected successfully to server');
-    db = client.db('dev');
-  }
-);
+    const result = await db.collection("test").find().toArray();
+    res.send(result);
+  });
 
-app.use(cors());
+  app.listen(PORT, () => {
+    console.log(`Example app listening at http://localhost:${PORT}`);
+  });
+};
 
-app.get('/', async (req, res) => {
-  if (!db) {
-    return res.send('Waiting for DB connection...');
-  }
-
-  const result = await db.collection('dev').find().toArray();
-  res.send(result);
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+main().catch(async (err) => {
+  console.error(err);
+  process.exit(1);
 });
