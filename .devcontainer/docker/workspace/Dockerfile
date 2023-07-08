@@ -7,7 +7,7 @@ ARG USER_UID
 ARG USER_GID
 
 LABEL maintainer="mizuki"
-LABEL version="2.0"
+LABEL version="1.0"
 LABEL description="my-workspace"
 
 # general packages
