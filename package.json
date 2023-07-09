@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start:backend": "npm run start -w backend",
-    "start:frontend": "npm run start -w frontend"
+    "dev:frontend": "npm run dev -w frontend"
   },
   "workspaces": [
     "packages/**/*"

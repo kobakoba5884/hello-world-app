@@ -5,7 +5,7 @@ function App() {
   const [data, setData] = useState(null);
 
   const fetchData = () => {
-    fetch("http://localhost:8080")
+    fetch(import.meta.env.VITE_APP_API_URL)
       .then((response) => response.json())
       .then((data) => setData(data))
       .catch((error) => console.error("Error:", error));
