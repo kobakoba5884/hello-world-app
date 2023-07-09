@@ -18,6 +18,12 @@ services:
     tty: true
     environment:
       TZ: ${TIME_ZONE:-Asia/Tokyo}
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER:-dbuser}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD:-thisIsReallyStrongPassword123}
+      MONGO_INITDB_DATABASE: ${DB_NAME:-dev}
+      MONGO_INITDB_COLLECTION: ${MONGO_INITDB_COLLECTION:-test}
+      MONGO_HOST: ${MONGO_HOST:-mongodb}
+      MONGO_PORT: ${MONGO_PORT:-27017}
     volumes:
       - ../:/home/${USER_NAME:-vscode}/workspace:cached
     ports:
@@ -31,7 +37,12 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${DB_USER:-dbuser}
       MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD:-thisIsReallyStrongPassword123}
       MONGO_INITDB_DATABASE: ${DB_NAME:-dev}
+      MONGO_INITDB_COLLECTION: ${MONGO_INITDB_COLLECTION:-test}
     ports:
       - ${MONGO_PORT:-27017}:27017
+    logging:
+      options:
+        max-size: 1g
     volumes:
       - ../.docker/mongodb:/data/db
+      - ./docker/mongodb/init-mongodb.js:/docker-entrypoint-initdb.d/init-mongodb.js:ro
