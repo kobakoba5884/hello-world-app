@@ -3,34 +3,37 @@ services:
   mongodb:
     image: mongo:6.0
     restart: unless-stopped
-    container_name: hello-world-app-mongodb
+    container_name: ${PROJECT_NAME:-hello-world-app}-mongodb
     environment:
-      MONGO_INITDB_ROOT_USERNAME: dbuser
-      MONGO_INITDB_ROOT_PASSWORD: thisIsReallyStrongPassword123
-      MONGO_INITDB_DATABASE: dev
-      MONGO_INITDB_COLLECTION: test
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER:-dbuser}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD:-thisIsReallyStrongPassword123}
+      MONGO_INITDB_DATABASE: ${DB_NAME:-dev}
+      MONGO_INITDB_COLLECTION: ${MONGO_INITDB_COLLECTION:-test}
     ports:
-      - 27017:27017
+      - ${MONGO_PORT:-27017}:27017
     volumes:
       - ./.devcontainer/docker/mongodb/init-mongodb.js:/docker-entrypoint-initdb.d/init-mongodb.js:ro
 
   backend:
-    container_name: hello-world-app-backend
+    container_name: ${PROJECT_NAME:-hello-world-app}-backend
     build: ./packages/backend
     environment:
-      MONGO_INITDB_ROOT_USERNAME: dbuser
-      MONGO_INITDB_ROOT_PASSWORD: thisIsReallyStrongPassword123
-      MONGO_INITDB_DATABASE: dev
-      MONGO_INITDB_COLLECTION: test
-      MONGO_HOST: mongodb
-      MONGO_PORT: 27017
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER:-dbuser}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD:-thisIsReallyStrongPassword123}
+      MONGO_INITDB_DATABASE: ${DB_NAME:-dev}
+      MONGO_INITDB_COLLECTION: ${MONGO_INITDB_COLLECTION:-test}
+      MONGO_HOST: ${MONGO_HOST:-mongodb}
+      MONGO_PORT: ${MONGO_PORT:-27017}
     ports:
-      - "8080:8080"
+      - ${BACKEND_PORT:-8080}:8080
     depends_on:
       - mongodb
 
   frontend:
-    container_name: hello-world-app-frontend
-    build: ./packages/frontend
+    container_name: ${PROJECT_NAME:-hello-world-app}-frontend
+    build: 
+      context: ./packages/frontend
+      args:
+          VITE_APP_API_URL: ${VITE_APP_API_URL}
     ports:
-      - "80:80"
+      - ${FRONT_PORT:-80}:80

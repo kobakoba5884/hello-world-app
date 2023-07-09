@@ -1,0 +1,30 @@
+[
+    {
+        "_id": "8ccd1140-03e8-488d-ba6a-4395d1f8257a",
+        "colId": "history",
+        "containerId": "",
+        "name": "http://dev-minminzame58.com:8080",
+        "url": "http://dev-minminzame58.com:8080",
+        "method": "GET",
+        "sortNum": 0,
+        "created": "2023-07-09T15:25:36.743Z",
+        "modified": "2023-07-09T15:25:36.743Z",
+        "headers": [],
+        "params": [],
+        "tests": []
+    },
+    {
+        "_id": "4c39f261-9b65-4158-8562-7c874e597e5d",
+        "colId": "history",
+        "containerId": "",
+        "name": "http://dev-minminzame58.com:80",
+        "url": "http://dev-minminzame58.com:80",
+        "method": "GET",
+        "sortNum": 0,
+        "created": "2023-07-09T15:30:59.660Z",
+        "modified": "2023-07-09T15:30:59.660Z",
+        "headers": [],
+        "params": [],
+        "tests": []
+    }
+]

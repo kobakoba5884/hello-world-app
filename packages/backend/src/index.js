@@ -3,7 +3,7 @@ const { MongoClient } = require("mongodb");
 const cors = require("cors");
 
 const main = async () => {
-  const PORT = process.env.PORT || 8080;
+  const PORT = process.env.BACKEND_PORT || 8080;
   const MONGO_INITDB_ROOT_USERNAME = process.env.MONGO_INITDB_ROOT_USERNAME || 'dbuser'
   const MONGO_INITDB_ROOT_PASSWORD = process.env.MONGO_INITDB_ROOT_PASSWORD || 'thisIsReallyStrongPassword123'
   const MONGO_INITDB_DATABASE = process.env.MONGO_INITDB_DATABASE || 'dev'
