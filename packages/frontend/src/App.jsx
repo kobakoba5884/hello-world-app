@@ -15,7 +15,7 @@ function App() {
     <div>
       <h1>Hello World App</h1>
       <button onClick={fetchData}>Load Data</button>
-      <pre>{data && JSON.stringify(data, null, 2)}</pre>
+      <pre>{data && data?.hello}</pre>
     </div>
   );
 }

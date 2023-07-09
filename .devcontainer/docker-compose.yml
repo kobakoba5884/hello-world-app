@@ -14,7 +14,7 @@ services:
         LOCALE: ${LOCALE:-ja_JP.UTF-8}
         GIT_USER: ${GIT_USER}
         GIT_EMAIL: ${GIT_EMAIL}
-        PORT: ${PORT:-8080}
+        BACKEND_PORT: ${BACKEND_PORT:-8080}
     tty: true
     environment:
       TZ: ${TIME_ZONE:-Asia/Tokyo}
