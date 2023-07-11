@@ -5,6 +5,7 @@ import {
   SecurityGroup,
   SubnetType,
   Vpc,
+  IpAddresses
 } from "aws-cdk-lib/aws-ec2";
 import { Construct } from "constructs";
 
@@ -25,6 +26,7 @@ export class InfraStack extends cdk.Stack {
     const vpcName = `${this.PROJECT_NAME}-vpc`;
     return new Vpc(this, vpcName, {
       vpcName: vpcName,
+      ipAddresses: IpAddresses.cidr('10.0.0.0/16'),
       enableDnsHostnames: true,
       enableDnsSupport: true,
       maxAzs: 2,
@@ -32,12 +34,12 @@ export class InfraStack extends cdk.Stack {
       subnetConfiguration: [
         {
           cidrMask: 24,
-          name: `${this.PROJECT_NAME}-private-subnet`,
+          name: `${this.PROJECT_NAME}-private`,
           subnetType: SubnetType.PRIVATE_ISOLATED,
         },
         {
           cidrMask: 24,
-          name: `${this.PROJECT_NAME}-public-subnet`,
+          name: `${this.PROJECT_NAME}-public`,
           subnetType: SubnetType.PUBLIC,
         },
       ],
@@ -66,7 +68,7 @@ export class InfraStack extends cdk.Stack {
       value: vpc.vpcId,
     });
 
-    new cdk.CfnOutput(this, "sgId", {
+    new cdk.CfnOutput(this, "sgId(sg-for-alb)", {
       description: "The id of the Security Group",
       value: sg.securityGroupId,
     });
